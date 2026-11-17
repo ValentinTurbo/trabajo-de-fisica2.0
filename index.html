@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<!-- GOOGLE SITES: Insertar > Incorporar > pestaña "Código incrustado" > pega TODO este archivo > Siguiente > Insertar.
+     Estira el bloque al ancho completo y a unos 800-900 px de alto. Dentro del bloque se muestra por pestañas;
+     fuera de Google Sites se ve completo. Opcional: escribe la URL de tu sitio en SITIO_URL (inicio del script). -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ley de Ohm · Guía interactiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--card:#141b34;--deep:#0d1330;--line:#252e52;--tx:#e8ecff;--mut:#9aa6d1;--v:#fbbf24;--i:#22d3ee;--r:#f472b6;--ok:#4ade80;--err:#fb7185}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:16px}
+.w{max-width:980px;margin:auto;display:grid;gap:18px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(16px,4vw,28px);transition:border-color .25s;animation:up .6s both}
+.k:hover{border-color:#3a4678}
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+h1{font-size:clamp(1.9rem,6vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px}
+h2{font-size:1.45rem;font-weight:800;margin-bottom:4px}
+.s{color:var(--mut)}
+.v{color:var(--v)}.i{color:var(--i)}.r{color:var(--r)}
+.pill{display:inline-block;font-size:.8rem;padding:3px 12px;border-radius:99px;background:var(--deep);border:1px solid var(--line);color:var(--mut);margin-bottom:12px}
+.f{font:700 clamp(2.2rem,9vw,4.2rem) "JetBrains Mono",ui-monospace,Consolas,monospace;text-align:center;padding:20px 8px;margin:18px 0 8px;border-radius:14px;background:var(--deep);border:1px solid var(--line)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:14px;margin-top:16px}
+.c{background:var(--deep);border:1px solid var(--line);border-top:4px solid var(--a,var(--line));border-radius:14px;padding:16px;transition:transform .25s,box-shadow .25s}
+.c:hover{transform:translateY(-4px);box-shadow:0 10px 24px #0006}
+.c h3{font-size:1.05rem;color:var(--a,var(--tx));margin-bottom:4px}
+.big{font:800 2.4rem/1 Inter,sans-serif;color:var(--a)}
+ol{padding-left:20px;margin:8px 0 12px}li{margin:3px 0}summary{cursor:pointer}.mn{font:600 1.1rem/1.8 "JetBrains Mono",ui-monospace,monospace;margin:8px 0}.sc{overflow-x:auto}.tb{width:100%;border-collapse:collapse;font-size:.92rem}.tb th,.tb td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}.tb th{color:var(--mut);font-weight:600}
+button{font:600 .9rem Inter,sans-serif;cursor:pointer;padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--tx);transition:.2s}
+button:hover{background:var(--tx);color:var(--bg)}
+a{color:var(--i)}
+/* triángulo */
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;align-items:center;margin-top:16px}
+.z{cursor:pointer;outline:none}
+.z polygon{fill:var(--a);fill-opacity:0;transition:fill-opacity .25s}
+.z:hover polygon{fill-opacity:.15}.z.on polygon{fill-opacity:.32}
+.z:focus-visible polygon{stroke:var(--tx);stroke-width:2}
+.z text{font:800 44px Inter,sans-serif;fill:var(--a);pointer-events:none}
+/* simulador */
+.pg{display:grid;gap:14px;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+input[type=range]{width:100%;accent-color:var(--a,var(--i))}
+.bar{height:14px;border-radius:99px;background:var(--deep);border:1px solid var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--i),#a5f3fc);transition:width .2s}
+/* calculadora */
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.seg label{position:relative;cursor:pointer}
+.seg input{position:absolute;opacity:0}
+.seg span{display:block;padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--deep);transition:.2s}
+.seg input:checked+span{background:var(--tx);color:var(--bg);font-weight:700}
+.seg input:focus-visible+span{outline:2px solid var(--i);outline-offset:2px}
+.fld{display:block;font-weight:600;color:var(--a)}
+.fld input{display:block;width:100%;margin-top:6px;padding:12px 14px;font:600 1.1rem "JetBrains Mono",ui-monospace,monospace;color:var(--tx);background:var(--deep);border:2px solid var(--line);border-radius:12px;outline:0;transition:border-color .2s,box-shadow .2s}
+.fld input:focus{border-color:var(--a);box-shadow:0 0 0 3px #ffffff14}
+.fld input.bad{border-color:var(--err)}
+.fld input[readonly]{border-style:dashed;color:var(--a);background:#101a3d}
+.fld small{color:var(--mut);font-weight:400}
+.msg{margin-top:14px;padding:10px 14px;border-radius:10px;background:var(--deep);color:var(--mut);font-size:.95rem;border:1px solid transparent}
+.msg.err{color:var(--err);border-color:var(--err)}
+.msg.ok{color:var(--ok);border-color:#4ade8066}
+.out{margin-top:12px;font:600 1.05rem/1.9 "JetBrains Mono",ui-monospace,monospace}
+html{scroll-padding-top:64px}body{overflow-x:hidden}[hidden]{display:none!important}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;overflow-x:auto;padding:10px 12px;border-radius:14px;background:#0b1020f0;border:1px solid var(--line);scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button,.nav a{flex:none;white-space:nowrap;font:600 .85rem Inter,sans-serif;padding:7px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--tx);text-decoration:none;cursor:pointer}
+.nav a{border-color:var(--v);color:var(--v)}
+.fld input{min-width:0}
+.fld input[type=range]{padding:0;border:0;background:none;box-shadow:none;height:30px}
+.res{display:none;margin-top:12px;padding:16px;border-radius:14px;background:var(--deep);border:1px solid var(--line)}
+.res.on{display:block}
+.res .lb{color:var(--mut);font-size:.9rem}
+.res .val{font:700 clamp(1.4rem,5.5vw,2.4rem)/1.25 "JetBrains Mono",ui-monospace,monospace;overflow-wrap:anywhere;word-break:break-all}
+.res .eq{color:var(--mut);overflow-wrap:anywhere}
+.out{font:400 .98rem/1.6 Inter,system-ui,sans-serif}
+.stp{margin:12px 0 0;padding-left:22px;overflow-wrap:anywhere}.stp li{margin:6px 0}
+.leg{font-size:.85rem;color:var(--mut);margin-top:10px}
+.cir{width:100%;max-width:560px;margin:12px auto 0;display:block;background:var(--deep);border:1px solid var(--line);border-radius:14px}
+.tx{font:700 15px Inter,sans-serif;fill:#9aa6d1}.tx.v{fill:var(--v)}.tx.r{fill:var(--r)}
+.el{fill:var(--i);stroke:#0b1020;stroke-width:1}[data-m=c] .el{fill:var(--v)}
+.mt{background:var(--deep);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--mut);font-size:.85rem}
+.mt b{display:block;font:700 1.25rem "JetBrains Mono",ui-monospace,monospace;color:var(--tx);overflow-wrap:anywhere}
+.phbox{position:relative;aspect-ratio:4/3;width:100%;max-height:680px;margin-top:12px;border-radius:14px;overflow:hidden;background:var(--deep);border:1px solid var(--line);display:grid;place-items:center}
+.phbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+details.mx{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:var(--deep);overflow:hidden}
+details.mx summary{cursor:pointer;padding:11px 14px;font-weight:600;list-style:none;display:flex;gap:8px;align-items:center}
+details.mx summary::-webkit-details-marker{display:none}
+details.mx summary::before{content:"▸";color:var(--i);transition:transform .2s}
+details.mx[open] summary::before{transform:rotate(90deg)}
+details.mx[open] summary{border-bottom:1px solid var(--line)}
+details.mx .bd{padding:12px 14px 14px;color:var(--mut)}
+details.mx .bd p+p{margin-top:8px}
+.fl{fill:none;stroke:var(--i);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:1 13;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-14}}
+.msg.warn{color:var(--v);border-color:var(--v)}
+:root{color-scheme:dark}
+.nav button.on{background:var(--tx);color:var(--bg)}
+body.tabs .w>.k:not(.on){position:absolute;left:-9999px;top:0;width:min(980px,100vw);height:0;overflow:hidden;visibility:hidden;margin:0;padding:0;border:0;animation:none}
+footer{text-align:center;color:var(--mut);font-size:.85rem;padding:4px 0 8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="w">
+<nav class="nav" aria-label="Secciones"><button type="button" data-go="inicio">Inicio</button><button type="button" data-go="vars">Variables</button><button type="button" data-go="sim">Simulador</button><button type="button" data-go="tri">Triángulo</button><button type="button" data-go="calc">Calculadora</button><button type="button" data-go="ej">Ejemplos</button><button type="button" data-go="mas">Potencia</button><button type="button" data-go="uso">Vida real</button><button type="button" data-go="lab">Laboratorio</button><button type="button" data-go="fuentes">Fuentes</button><button type="button" id="view"></button><button type="button" id="all">📖 Abrir todo</button><a id="sitio" hidden target="_blank" rel="noopener"></a></nav>
+
+<header class="k" id="inicio">
+  <span class="pill">⚡ Electricidad básica · Georg Simon Ohm, 1827</span>
+  <h1>La <span class="v">Ley</span> de <span class="i">Ohm</span></h1>
+  <p class="s">Describe cómo se relacionan el voltaje, la corriente y la resistencia en un circuito: la corriente que circula por un conductor es directamente proporcional al voltaje aplicado e inversamente proporcional a su resistencia. Es una de las leyes fundamentales de la electricidad y la electrónica. En su honor, la unidad de resistencia se llama ohmio (Ω).</p>
+  <div class="f"><span class="v">V</span> = <span class="i">I</span> · <span class="r">R</span></div>
+  <p class="s">💧 Imagina una manguera: el voltaje es la presión del agua, la corriente es el caudal y la resistencia es un estrechamiento que frena el paso.</p>
+<details class="mx"><summary>📖 Profundiza: ¿qué significa «proporcional»?</summary><div class="bd"><p>Decir que la corriente es <b>directamente proporcional</b> al voltaje significa que, con la misma resistencia, si duplicas V la corriente también se duplica, y si triplicas V se triplica. En una gráfica de V contra I eso dibuja una recta que pasa por el origen, y su pendiente es la resistencia.</p><p>Decir que es <b>inversamente proporcional</b> a la resistencia significa que, con el mismo voltaje, si duplicas R la corriente se reduce a la mitad. Georg Simon Ohm publicó este resultado en 1827, después de medir cómo cambiaba la corriente en distintos alambres. El ohmio (Ω), la unidad de resistencia, lleva su nombre y equivale a 1 voltio por cada amperio (1 Ω = 1 V/A).</p></div></details>
+</header>
+
+<section class="k" id="vars">
+  <h2>Las tres variables</h2>
+  <p class="s">Cada magnitud tiene su símbolo, su unidad y su papel en el circuito.</p>
+  <div class="g">
+    <div class="c" style="--a:var(--v)"><div class="big">V</div><h3>Voltaje (tensión)</h3><p class="s">Se mide en voltios (V). Es la «presión» que empuja a los electrones por el circuito. Algunos textos lo escriben E, por fuerza electromotriz.</p><details class="mx"><summary>Leer más sobre el voltaje</summary><div class="bd"><p>El voltaje o diferencia de potencial es la energía que se entrega a cada unidad de carga entre dos puntos: 1 V equivale a 1 julio por coulomb. Como siempre se mide <i>entre dos puntos</i>, el voltímetro se conecta en paralelo con el elemento que quieres medir.</p><p>Una pila común tiene 1,5 V, la batería de un auto 12 V y la red doméstica 230 V en muchos países. Lo que produce los efectos es la corriente que circula, y esa corriente depende del voltaje y de la resistencia del camino (V = I × R); por eso los voltajes altos exigen mucho cuidado.</p></div></details></div>
+    <div class="c" style="--a:var(--i)"><div class="big">I</div><h3>Corriente (intensidad)</h3><p class="s">Se mide en amperios (A). Es el caudal de electrones que circula por el conductor.</p><details class="mx"><summary>Leer más sobre la corriente</summary><div class="bd"><p>La corriente es la cantidad de carga que pasa por un punto cada segundo: 1 A equivale a 1 coulomb por segundo. Los electrones se mueven del polo negativo al positivo, pero por una convención histórica la corriente se dibuja del positivo al negativo (sentido convencional). Son dos formas de describir el mismo fenómeno.</p><p>El amperímetro se conecta en <b>serie</b>, para que toda la corriente lo atraviese. En electrónica se usan submúltiplos: 1 mA = 0,001 A y 1 µA = 0,000001 A.</p></div></details></div>
+    <div class="c" style="--a:var(--r)"><div class="big">R</div><h3>Resistencia</h3><p class="s">Se mide en ohmios (Ω). Es la oposición al paso de la corriente: cuanto mayor es, menos corriente circula.</p><details class="mx"><summary>Leer más sobre la resistencia</summary><div class="bd"><p>La resistencia de un conductor depende del material, de su longitud y de su grosor: R = ρ × L ÷ A, donde ρ es la resistividad del material, L la longitud y A el área de la sección. Un cable largo y delgado resiste más que uno corto y grueso; por eso los cables que llevan mucha corriente son gruesos.</p><p>También cambia con la temperatura: en el filamento de una bombilla aumenta al calentarse. La resistencia se mide con un ohmímetro y con el componente sin alimentación. Múltiplos habituales: 1 kΩ = 1000 Ω y 1 MΩ = 1 000 000 Ω.</p></div></details></div>
+  </div>
+  <div class="pg">
+    <b>🎚️ Explora: mueve los controles y observa la corriente</b>
+    <label>Voltaje <b class="v" id="pv"></b><input type="range" id="sv" min="1" max="24" value="12" style="--a:var(--v)"></label>
+    <label>Resistencia <b class="r" id="pr"></b><input type="range" id="sr" min="1" max="24" value="6" style="--a:var(--r)"></label>
+    <div>Corriente resultante <b class="i" id="pi"></b><div class="bar"><i id="bi"></i></div></div>
+    <p class="s">Sube V y la corriente sube. Sube R y la corriente baja.</p>
+    <svg viewBox="0 0 300 190" role="img" aria-label="Gráfica de voltaje contra corriente" style="width:100%;max-width:420px;margin:auto;display:block">
+      <path d="M30 10V170H285" fill="none" stroke="#5b6aa8" stroke-width="2"/>
+      <line id="gl" x1="30" y1="170" x2="285" y2="10" style="stroke:var(--r)" stroke-width="3" stroke-linecap="round"/>
+      <circle id="gp" cx="30" cy="170" r="6" style="fill:var(--i)"/>
+      <text x="285" y="186" text-anchor="end" fill="#9aa6d1" font-size="11">Corriente I (A)</text>
+      <text x="36" y="20" fill="#9aa6d1" font-size="11">Voltaje V</text>
+    </svg>
+    <p class="s">Gráfica V–I: es una recta que pasa por el origen y su pendiente es la resistencia R. Con más R, la recta se inclina más.</p>
+  </div>
+</section>
+
+<section class="k" id="sim">
+  <h2>Simulador de circuito <span class="s" style="font-weight:400">· estilo PhET</span></h2>
+  <p class="s">Cambia la pila y la resistencia, abre el interruptor y observa el flujo de electrones, la corriente y el calor.</p>
+  <svg id="sCir" class="cir" viewBox="0 0 400 230" role="img" aria-label="Circuito con pila, interruptor y resistencia" data-m="e">
+    <path id="sLoop" d="M70 50H330V180H70Z" fill="none" stroke="#5b6aa8" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="52" y="92" width="36" height="46" fill="#141b34"/>
+    <path d="M50 100H90" stroke="#fbbf24" stroke-width="5"/><path d="M60 130H80" stroke="#fbbf24" stroke-width="5"/>
+    <text class="tx v" x="96" y="106">+</text><text class="tx v" x="96" y="138">−</text><text class="tx" x="14" y="120">Pila</text>
+    <rect x="176" y="38" width="48" height="24" fill="#141b34"/>
+    <circle cx="176" cy="50" r="4" fill="#9aa6d1"/><circle cx="224" cy="50" r="4" fill="#9aa6d1"/>
+    <rect x="312" y="84" width="36" height="62" fill="#141b34"/>
+    <circle id="sGlow" cx="330" cy="115" r="40" fill="#ff7a1a" style="opacity:0;transition:opacity .3s"/>
+    <path id="sRes" d="M330 84V92L318 98L342 110L318 122L342 134L330 140V146" fill="none" stroke="#f472b6" stroke-width="5" stroke-linejoin="round"/>
+    <text class="tx r" x="356" y="120">R</text>
+    <line id="sLever" x1="176" y1="50" x2="224" y2="50" stroke="#e8ecff" stroke-width="5" stroke-linecap="round" style="cursor:pointer;transform-origin:176px 50px;transition:transform .25s"/>
+    <g id="sDots"></g>
+  </svg>
+  <div class="f" style="display:flex;gap:12px;justify-content:center;align-items:baseline;min-height:96px;padding:12px"><span id="eV" class="v">V</span><span style="font-size:2rem">=</span><span id="eI" class="i">I</span><span id="eR" class="r">R</span></div>
+  <p class="s" style="text-align:center">El tamaño de cada letra crece con su valor.</p>
+  <div class="g" style="grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));margin-top:12px">
+    <div class="mt">Voltímetro<b id="mV"></b></div><div class="mt">Amperímetro<b id="mI"></b></div><div class="mt">Resistencia<b id="mR"></b></div><div class="mt">Potencia<b id="mP"></b></div>
+  </div>
+  <div class="g" style="margin-top:14px">
+    <label class="fld" style="--a:var(--v)">Voltaje de la pila: <b id="lV"></b><input type="range" id="kV" min="0.5" max="24" step="0.5" value="9"></label>
+    <label class="fld" style="--a:var(--r)">Resistencia: <b id="lR"></b><input type="range" id="kR" min="10" max="500" step="5" value="100"></label>
+  </div>
+  <div class="seg" style="margin-top:14px"><button type="button" id="sSw"></button><button type="button" id="sDir"></button></div>
+  <div class="msg" id="sNote" aria-live="polite"></div>
+  <details class="mx"><summary>📖 Profundiza: qué estás viendo en el simulador</summary><div class="bd"><p>Los puntos en movimiento representan cargas que circulan: cuanta más corriente, más rápido avanzan. Con el interruptor abierto el circuito queda abierto: la corriente cae a 0 aunque la pila siga teniendo voltaje. El brillo de la resistencia representa el calor que produce, con P = V × I = I² × R: si duplicas la corriente, el calor se multiplica por cuatro.</p><p>El tamaño de las letras de la ecuación te recuerda qué magnitud es grande o pequeña en cada momento. Puedes alternar el sentido de las cargas: los electrones van de − a +, pero la corriente convencional se dibuja de + a −.</p></div></details>
+</section>
+
+<section class="k" id="tri">
+  <h2>La regla del triángulo</h2>
+  <p class="s">Toca una letra para taparla y lee la fórmula que queda.</p>
+  <div class="tg">
+    <svg viewBox="0 0 300 260" role="group" aria-label="Triángulo de la ley de Ohm" style="width:100%;max-width:330px;margin:auto;display:block">
+      <g class="z" data-k="V" tabindex="0" role="button" aria-label="Tapar V" style="--a:var(--v)"><polygon points="150,20 226.8,150 73.2,150"/><text x="150" y="122" text-anchor="middle">V</text></g>
+      <g class="z" data-k="I" tabindex="0" role="button" aria-label="Tapar I" style="--a:var(--i)"><polygon points="73.2,150 150,150 150,240 20,240"/><text x="98" y="212" text-anchor="middle">I</text></g>
+      <g class="z" data-k="R" tabindex="0" role="button" aria-label="Tapar R" style="--a:var(--r)"><polygon points="150,150 226.8,150 280,240 150,240"/><text x="202" y="212" text-anchor="middle">R</text></g>
+      <path d="M150 20 280 240H20Z M73.2 150H226.8M150 150V240" fill="none" stroke="#5b6aa8" stroke-width="3" stroke-linejoin="round" pointer-events="none"/>
+    </svg>
+    <div>
+      <div class="f" id="tf" style="font-size:clamp(1.8rem,7vw,3rem)"></div>
+      <p id="td"></p>
+      <p class="s" style="margin-top:8px">Si dos letras quedan lado a lado en la base, se multiplican; si una queda encima de otra, se divide.</p>
+      <details class="mx"><summary>📖 Profundiza: ¿por qué funciona el triángulo?</summary><div class="bd"><p>El triángulo es una forma visual de despejar. Todo parte de V = I × R. Si divides los dos lados entre R, queda I = V ÷ R; si los divides entre I, queda R = V ÷ I. V va arriba porque es el resultado de multiplicar I por R.</p><p>Al tapar una letra, lo que queda a la vista indica la operación: lado a lado se multiplica, una sobre otra se divide. Antes de usarlo, revisa las unidades (voltios, amperios, ohmios) y no mezcles mA con A.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="k" id="calc">
+  <h2>Calculadora interactiva</h2>
+  <p class="s">Elige qué quieres calcular e ingresa los otros dos valores. El resultado se actualiza mientras escribes.</p>
+  <p class="leg">Signos: <b>·</b> y <b>×</b> significan multiplicar; <b>/</b> y <b>÷</b> significan dividir. Un <b>−</b> en V o I indica polaridad o sentido contrario al de referencia; R siempre es positiva. Decimales con punto o coma.</p>
+  <div class="seg" role="radiogroup" aria-label="Magnitud a calcular">
+    <label><input type="radio" name="t" value="V"><span>Calcular voltaje</span></label>
+    <label><input type="radio" name="t" value="I" checked><span>Calcular corriente</span></label>
+    <label><input type="radio" name="t" value="R"><span>Calcular resistencia</span></label>
+  </div>
+  <div class="g" style="margin-top:0">
+    <label class="fld" style="--a:var(--v)">Voltaje (V) <small>voltios</small><input id="V" inputmode="decimal" autocomplete="off"></label>
+    <label class="fld" style="--a:var(--i)">Corriente (I) <small>amperios</small><input id="I" inputmode="decimal" autocomplete="off"></label>
+    <label class="fld" style="--a:var(--r)">Resistencia (R) <small>ohmios</small><input id="R" inputmode="decimal" autocomplete="off"></label>
+  </div>
+  <div id="msg" class="msg" role="status" aria-live="polite"></div>
+  <div id="res" class="res" aria-live="polite"></div>
+  <div id="out" class="out"></div>
+  <button type="button" id="clr" style="margin-top:12px">Limpiar</button>
+  <details class="mx"><summary>📖 Profundiza: unidades, prefijos y signos</summary><div class="bd"><p>Convierte siempre a unidades base antes de calcular: 20 mA = 0,02 A y 4,7 kΩ = 4700 Ω. Si no lo haces, el resultado queda multiplicado o dividido por mil.</p><p>El signo − en V o I solo indica polaridad o sentido respecto de una referencia. La resistencia de un resistor siempre es positiva, por eso al calcular R los signos de V e I deben coincidir. No se puede dividir entre cero: R = 0 sería un cortocircuito (la corriente tendería a infinito) e I = 0 un circuito abierto (resistencia infinita).</p><p>La calculadora te muestra el razonamiento paso a paso y comprueba el resultado con otra fórmula.</p></div></details>
+  <p class="s" style="margin-top:12px;font-size:.9rem">💡 Convierte antes a unidades base: 20 mA = 0,02 A y 1 kΩ = 1000 Ω. Olvidarlo es uno de los errores más comunes.</p>
+</section>
+
+<section class="k" id="ej">
+  <h2>Ejemplos resueltos paso a paso</h2>
+  <p class="s">Pulsa «Probar» para cargar los datos en la calculadora.</p>
+  <details class="c" style="--a:var(--ok);margin-top:14px"><summary><b>🧭 Método en 6 pasos para cualquier ejercicio</b></summary>
+    <ol><li>Identifica qué magnitud necesitas calcular.</li><li>Anota los datos conocidos.</li><li>Convierte a unidades base (V, A, Ω): 20 mA = 0,02 A.</li><li>Elige la fórmula con ayuda del triángulo.</li><li>Sustituye los valores y calcula.</li><li>Comprueba que el resultado tenga sentido: una corriente enorme puede indicar una resistencia muy baja, un error de unidades o un cortocircuito.</li></ol></details>
+  <div class="g">
+    <article class="c" style="--a:var(--i)"><h3>Ejemplo 1 · Calcular la corriente</h3>
+      <p>Una batería de 12 V alimenta una resistencia de 6 Ω. ¿Qué corriente circula?</p>
+      <ol><li><b>Datos:</b> V = 12 V, R = 6 Ω; incógnita: I.</li><li><b>Fórmula:</b> I = V ÷ R</li><li><b>Sustitución:</b> I = 12 V ÷ 6 Ω</li><li><b>Resultado:</b> <b class="i">I = 2 A</b></li></ol>
+      <button type="button" data-t="I" data-v="12" data-r="6">Probar en la calculadora</button></article>
+    <article class="c" style="--a:var(--r)"><h3>Ejemplo 2 · Calcular la resistencia</h3>
+      <p>Una lámpara conectada a 24 V consume 6 A. ¿Cuál es su resistencia?</p>
+      <ol><li><b>Datos:</b> V = 24 V, I = 6 A; incógnita: R.</li><li><b>Fórmula:</b> R = V ÷ I</li><li><b>Sustitución:</b> R = 24 V ÷ 6 A</li><li><b>Resultado:</b> <b class="r">R = 4 Ω</b></li></ol>
+      <button type="button" data-t="R" data-v="24" data-i="6">Probar en la calculadora</button></article>
+    <article class="c" style="--a:var(--v)"><h3>Ejemplo 3 · Calcular el voltaje</h3>
+      <p>Por una resistencia de 8 Ω circulan 5 A. ¿Qué voltaje hay en sus extremos?</p>
+      <ol><li><b>Datos:</b> R = 8 Ω, I = 5 A; incógnita: V.</li><li><b>Fórmula:</b> V = I × R</li><li><b>Sustitución:</b> V = 5 A × 8 Ω</li><li><b>Resultado:</b> <b class="v">V = 40 V</b></li></ol>
+      <button type="button" data-t="V" data-i="5" data-r="8">Probar en la calculadora</button></article>
+    <article class="c" style="--a:var(--ok)"><h3>Ejemplo 4 · Resistencia para un LED</h3>
+      <p>Un LED trabaja con 2 V y 20 mA y se conecta a una fuente de 9 V. ¿Qué resistencia en serie necesita?</p>
+      <ol><li><b>Voltaje de la resistencia:</b> 9 V − 2 V = 7 V</li><li><b>Unidades:</b> 20 mA = 0,02 A</li><li><b>Fórmula:</b> R = V ÷ I</li><li><b>Sustitución:</b> R = 7 V ÷ 0,02 A</li><li><b>Resultado:</b> <b class="r">R = 350 Ω</b></li></ol>
+      <button type="button" data-t="R" data-v="7" data-i="0.02">Probar en la calculadora</button></article>
+  </div>
+  <details class="mx"><summary>📖 Profundiza: errores frecuentes al resolver problemas</summary><div class="bd"><p><b>1)</b> Olvidar convertir mA a A. <b>2)</b> Usar el voltaje de la fuente en vez del voltaje que cae en la resistencia (en el ejemplo del LED hay que restar sus 2 V). <b>3)</b> Despejar al revés: para R es V ÷ I, no I ÷ V. <b>4)</b> Sumar como en serie resistencias que están en paralelo. <b>5)</b> Dar el resultado sin unidad.</p><p>Una buena costumbre es estimar si el resultado tiene sentido (una pila de 9 V no puede dar 90 A por una resistencia de 100 Ω; son 0,09 A) y comprobarlo con la fórmula inversa.</p></div></details>
+</section>
+
+<section class="k" id="mas">
+  <h2>Un paso más: potencia y varias resistencias</h2>
+  <p class="s">La ley de Ohm también sirve para calcular la potencia y para analizar circuitos con más de una resistencia.</p>
+  <div class="g">
+    <div class="c" style="--a:var(--v)"><h3>⚡ Potencia eléctrica</h3>
+      <p class="s">La potencia (en vatios, W) mide la rapidez con la que un elemento consume o transforma energía.</p>
+      <p class="mn">P = <span class="v">V</span> · <span class="i">I</span><br>P = <span class="i">I</span>² · <span class="r">R</span><br>P = <span class="v">V</span>² / <span class="r">R</span></p>
+      <p class="s">Ejemplo: 2 A por una resistencia de 10 Ω dan P = 2² × 10 = <b>40 W</b>; la resistencia debe soportar esa potencia con margen de seguridad. Si solo conoces P e I, el voltaje sale de V = P / I.</p></div>
+    <div class="c" style="--a:var(--r);grid-column:1/-1"><h3>🔗 Serie y paralelo</h3>
+      <div class="sc"><table class="tb"><tr><th></th><th>En serie</th><th>En paralelo</th></tr>
+        <tr><td>Corriente</td><td>La misma en todos los elementos</td><td>Se reparte entre las ramas</td></tr>
+        <tr><td>Voltaje</td><td>Se reparte entre los elementos</td><td>El mismo en cada rama</td></tr>
+        <tr><td>Resistencia total</td><td>Rt = R1 + R2 + …</td><td>1/Rt = 1/R1 + 1/R2 + …</td></tr></table></div>
+      <p class="s" style="margin-top:10px">Ejemplo con 10 Ω, 20 Ω y 12 V. En serie: Rt = 30 Ω, I = 0,4 A y caídas de 4 V y 8 V (suman 12 V). En paralelo: Rt ≈ 6,67 Ω e I total = 1,8 A (1,2 A + 0,6 A).</p></div>
+  </div>
+  <details class="mx"><summary>📖 Profundiza: de dónde salen estas fórmulas</summary><div class="bd"><p>Como P = V × I y V = I × R, al sustituir V obtienes P = I² × R; si sustituyes I = V ÷ R, queda P = V² ÷ R.</p><p>En serie la misma corriente atraviesa todas las resistencias, así que los voltajes se suman: V = I × R₁ + I × R₂ = I × (R₁ + R₂), y de ahí Rt = R₁ + R₂. En paralelo todas las ramas tienen el mismo voltaje y las corrientes se suman: I = V ÷ R₁ + V ÷ R₂, por eso 1/Rt = 1/R₁ + 1/R₂ y la resistencia total es siempre menor que la menor de las ramas. Compruébalo en el laboratorio virtual.</p></div></details>
+</section>
+
+<section class="k" id="uso">
+  <h2>Ley de Ohm en la vida real</h2>
+  <p class="s">Cada caso muestra sus números reales. Pulsa «Probar este caso» para verlo en el simulador o en la calculadora.</p>
+  <div class="g" id="apps"></div>
+  <h3 style="margin-top:20px">Para qué sirve en la práctica</h3>
+  <div class="g">
+    <div class="c"><h3>🔧 Diagnóstico</h3><p class="s">Una corriente más alta de lo esperado sugiere que la resistencia bajó o que hay un cortocircuito. Una corriente baja apunta a conexiones flojas, corrosión o piezas dañadas.</p></div>
+    <div class="c"><h3>⚠️ Cortocircuito</h3><p class="s">Si R tiende a 0, I = V ÷ R crece enormemente: se calientan los cables, se dañan componentes y puede ser peligroso.</p></div>
+    <div class="c"><h3>🔌 Circuito abierto</h3><p class="s">Si R tiende a infinito, la corriente cae casi a 0: el circuito no conduce.</p></div>
+    <div class="c"><h3>📐 Diseño</h3><p class="s">Permite elegir resistencias y fusibles, estimar la caída de tensión en cables largos y proteger equipos sensibles, por ejemplo limitando la corriente de un LED.</p></div>
+  </div>
+  <p class="s" style="margin-top:14px">📝 Límites: V = I · R se aplica directamente cuando la resistencia es aproximadamente constante (comportamiento «óhmico»). No lo siguen igual los diodos, LED, termistores, transistores ni los filamentos de lámparas, y en corriente alterna se usa la impedancia (Z). Además, la ley no sustituye las normas de seguridad, las protecciones ni a personal capacitado.</p>
+<details class="mx"><summary>📖 Profundiza: seguridad eléctrica y ley de Ohm</summary><div class="bd"><p>Los fusibles y disyuntores se eligen para cortar cuando la corriente supera un valor seguro para los cables. En un cortocircuito la resistencia baja muchísimo y, como I = V ÷ R, la corriente se dispara y calienta los conductores (P = I² × R). Los aparatos de calefacción tienen resistencias bajas y consumen mucha corriente, por eso no conviene conectarlos a cables delgados o extensiones no preparadas.</p><p>Estos ejemplos son educativos: no manipules instalaciones de la red eléctrica sin formación ni supervisión.</p></div></details>
+</section>
+
+<section class="k" id="lab">
+  <h2>Laboratorio virtual</h2>
+  <p class="s">Experimenta sin riesgos: arma un circuito con dos resistencias y descubre qué componentes cumplen la ley de Ohm.</p>
+  <div class="seg"><label><input type="radio" name="lb" value="sp" checked><span>Serie y paralelo</span></label><label><input type="radio" name="lb" value="vi"><span>¿Cumple la ley de Ohm?</span></label></div>
+
+  <div id="lab-sp">
+    <div class="seg"><label><input type="radio" name="cf" value="s" checked><span>En serie</span></label><label><input type="radio" name="cf" value="p"><span>En paralelo</span></label></div>
+    <svg class="cir" viewBox="0 0 400 220" role="img" aria-label="Circuito con una pila y dos resistencias en serie o en paralelo">
+      <path d="M60 40H340V180H60Z" fill="none" stroke="#5b6aa8" stroke-width="4" stroke-linejoin="round"/>
+      <rect x="42" y="88" width="36" height="46" fill="#141b34"/>
+      <path d="M40 96H80" stroke="#fbbf24" stroke-width="5"/><path d="M50 126H70" stroke="#fbbf24" stroke-width="5"/>
+      <text class="tx v" x="86" y="102">+</text><text class="tx v" x="86" y="134">−</text>
+      <rect x="326" y="80" width="28" height="60" fill="#141b34"/>
+      <path d="M340 80V86L328 94L352 106L328 118L352 130L340 136V140" fill="none" stroke="#a78bfa" stroke-width="5" stroke-linejoin="round"/>
+      <text class="tx" x="360" y="114" style="fill:#a78bfa">R₂</text>
+      <g id="xS"><rect x="148" y="28" width="64" height="24" fill="#141b34"/><path d="M148 40H158L164 28L176 52L188 28L194 40H212" fill="none" stroke="#f472b6" stroke-width="5" stroke-linejoin="round"/><text class="tx r" x="168" y="22">R₁</text></g>
+      <g id="xP" style="display:none"><path d="M200 40V78L188 88L212 100L188 112L212 124L200 134V180" fill="none" stroke="#f472b6" stroke-width="5" stroke-linejoin="round"/><circle cx="200" cy="40" r="4" fill="#9aa6d1"/><circle cx="200" cy="180" r="4" fill="#9aa6d1"/><text class="tx r" x="220" y="110">R₁</text></g>
+      <path id="xF1" class="fl"/><path id="xF2" class="fl"/><path id="xF3" class="fl"/><path id="xF4" class="fl"/>
+    </svg>
+    <div class="g" style="grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr));margin-top:12px">
+      <label class="fld" style="--a:var(--v)">Pila: <b id="xVl"></b><input type="range" id="xV" min="1" max="24" step="1" value="9"></label>
+      <label class="fld" style="--a:var(--r)">R₁: <b id="xAl"></b><input type="range" id="xA" min="10" max="500" step="10" value="100"></label>
+      <label class="fld" style="--a:#a78bfa">R₂: <b id="xBl"></b><input type="range" id="xB" min="10" max="500" step="10" value="200"></label>
+    </div>
+    <div class="g" style="grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));margin-top:12px">
+      <div class="mt">Resistencia total<b id="xRt"></b></div><div class="mt">Corriente total<b id="xI"></b></div>
+      <div class="mt">R₁: voltaje · corriente<b id="xT1"></b></div><div class="mt">R₂: voltaje · corriente<b id="xT2"></b></div><div class="mt">Potencia total<b id="xW"></b></div>
+    </div>
+    <ol class="stp" id="xSt"></ol>
+    <p class="leg">Los destellos muestran el sentido convencional de la corriente (de + a −) y van más rápido cuanta más corriente pasa por ese tramo.</p>
+  </div>
+
+  <div id="lab-vi" hidden>
+    <div class="seg"><label><input type="radio" name="cp" value="r" checked><span>Resistor de 100 Ω</span></label><label><input type="radio" name="cp" value="b"><span>Bombilla</span></label><label><input type="radio" name="cp" value="d"><span>Diodo LED</span></label></div>
+    <svg class="cir" viewBox="0 0 300 200" role="img" aria-label="Gráfica de corriente contra voltaje del componente elegido">
+      <path d="M30 10V170H285" fill="none" stroke="#5b6aa8" stroke-width="2"/>
+      <polyline id="yC" fill="none" stroke="#f472b6" stroke-width="3" stroke-linejoin="round" points=""/>
+      <circle id="yP" r="6" cx="30" cy="170" style="fill:var(--i)"/>
+      <text x="285" y="190" text-anchor="end" fill="#9aa6d1" font-size="11">Voltaje V (hasta <tspan id="yXm"></tspan>)</text>
+      <text x="36" y="20" fill="#9aa6d1" font-size="11">Corriente I (hasta <tspan id="yYm"></tspan>)</text>
+    </svg>
+    <label class="fld" style="--a:var(--v);margin-top:12px">Sube el voltaje<input type="range" id="yS" min="2" max="100" value="50"></label>
+    <div class="g" style="grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));margin-top:12px"><div class="mt">Voltaje<b id="yV"></b></div><div class="mt">Corriente<b id="yI"></b></div><div class="mt">R = V ÷ I<b id="yR"></b></div></div>
+    <div class="msg" id="yM" aria-live="polite"></div>
+  </div>
+  <details class="mx"><summary>📖 Profundiza: ¿por qué una bombilla o un LED no cumplen la ley de Ohm?</summary><div class="bd"><p>En un filamento, la corriente lo calienta y al calentarse su resistencia aumenta; entonces R no es constante y la gráfica I–V se curva. En un diodo o LED casi no circula corriente hasta superar un voltaje umbral (alrededor de 0,6–0,7 V en un diodo de silicio y 1,8–3 V en un LED), y a partir de ahí la corriente crece muy rápido; por eso se coloca una resistencia en serie que la limite.</p><p>Llamamos <b>óhmicos</b> a los componentes con resistencia constante, como un resistor a temperatura estable. En los demás, V = I × R sigue siendo cierta en cada punto, pero el cociente V ÷ I cambia con el voltaje. Los modelos del laboratorio están simplificados con fines didácticos.</p></div></details>
+</section>
+
+<section class="k" id="fuentes">
+  <h2>Fuentes y para seguir aprendiendo</h2>
+  <p class="s">Fuentes base del contenido:</p>
+  <ol>
+    <li><a href="https://www.fluke.com/es-mx/informacion/blog/electrica/que-es-la-ley-de-ohm" target="_blank" rel="noopener">Fluke · La ley de Ohm: qué es y cómo calcularla</a> — variables, unidades, triángulo y ejemplos 1 a 3.</li>
+    <li><a href="https://gramsadistribuidora.com/ley-de-ohm/" target="_blank" rel="noopener">Gramsa · Ley de Ohm: fórmula, ejemplos y cómo aplicarla</a> — método paso a paso, ejemplo del LED, potencia, serie y paralelo, gráfica y límites.</li>
+    <li><a href="https://www.ingmecafenix.com/electronica/leyes/ley-de-ohm/" target="_blank" rel="noopener">Ingeniería Mecafenix · Qué es la ley de Ohm y cómo se utiliza</a> — enunciado, despejes, condiciones extremas y potencia.</li>
+  </ol>
+  <p class="s" style="margin-top:10px">Referencias externas de apoyo:</p>
+  <ol start="4">
+    <li><a href="https://hyperphysics.gsu.edu/hbase/electric/ohmlaw.html" target="_blank" rel="noopener">HyperPhysics · Ohm's Law (Georgia State University)</a> — base física y validez de la ley.</li>
+    <li><a href="https://phet.colorado.edu/es/simulation/ohms-law" target="_blank" rel="noopener">PhET · Simulación «Ley de Ohm» (Universidad de Colorado Boulder)</a> — practica con un circuito virtual.</li>
+  </ol>
+</section>
+
+<footer>Material educativo elaborado a partir de las fuentes citadas.</footer>
+</div>
+
+<script>
+/* ===== PUENTE CON GOOGLE SITES (opcional) =====
+   Escribe entre las comillas la URL de tu sitio u otra página y aparecerá un botón en el menú.
+   Se abre en pestaña nueva, porque un bloque incrustado no puede cambiar la página del sitio. */
+const SITIO_URL='',SITIO_TEXTO='← Volver al sitio';
+
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),ids=['V','I','R'];
+const U={V:'V',I:'A',R:'Ω'},N={V:'Voltaje',I:'Corriente',R:'Resistencia'},A={V:'el voltaje',I:'la corriente',R:'la resistencia'};
+const FRM={V:'V = I × R',I:'I = V ÷ R',R:'R = V ÷ I'};
+const WHY={V:'al tapar V quedan I y R lado a lado: se multiplican',I:'al tapar I queda V encima de R: se divide',R:'al tapar R queda V encima de I: se divide'};
+const Z={I:{V:'con 0 V nada empuja a las cargas y I sería 0 A.',R:'0 Ω es un cortocircuito: I = V ÷ R tendería a infinito y no se puede dividir entre 0.'},
+ V:{I:'con 0 A no circula corriente y V sería 0 V.',R:'0 Ω es un cortocircuito ideal: V sería 0 V sin importar la corriente.'},
+ R:{V:'con 0 V no hay diferencia de potencial: R = 0 ÷ I daría 0 Ω, que no es una resistencia útil.',I:'0 A es un circuito abierto: R = V ÷ I no se puede dividir entre 0.'}};
+const col=s=>s.replace(/[VIR]/g,m=>`<span class="${m.toLowerCase()}">${m}</span>`);
+
+/* ---- Números completos: sin redondeos ocultos ni notación científica innecesaria ---- */
+const clean=x=>parseFloat(x.toPrecision(15));   /* quita el ruido binario (0,1 × 3 = 0,30000000000000004) */
+const sig=x=>clean(x).toExponential().split('e')[0].replace(/[-.]/g,'').length;
+function expand(a){const s=String(a);if(!/e/.test(s))return s;
+  const[m,e]=s.split('e'),[i,f='']=m.split('.'),d=i+f,p=i.length+Number(e);
+  return p<=0?'0.'+'0'.repeat(-p)+d:p>=d.length?d+'0'.repeat(p-d.length):d.slice(0,p)+'.'+d.slice(p)}
+function plain(x){x=clean(x);const a=Math.abs(x),g=x<0?'−':'';
+  if(a!==0&&(a<1e-9||a>=1e15)){const[m,e]=a.toExponential().split('e');
+    return g+m.replace('.',',')+' × 10<sup>'+String(Number(e)).replace('-','−')+'</sup>'}
+  return g+expand(a).replace('.',',')}
+const pu=(x,u)=>x<0?`(${plain(x)} ${u})`:`${plain(x)} ${u}`;
+function si(x,u){const a=Math.abs(x),P=[[1e9,'G'],[1e6,'M'],[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n']];
+  if(!a||!isFinite(a))return'';const p=P.find(q=>a>=q[0])||P[6];
+  return p[0]===1?'':plain(x/p[0])+' '+p[1]+u}
+
+/* ---- Lectura de lo que escribe la persona: coma o punto decimal, signo − o - ---- */
+function num(s){s=s.trim().replace(/\s+/g,'').replace('−','-');
+  if(!s)return{e:1};let miles=false;
+  if(/^[+-]?[1-9]\d{0,2}(\.\d{3})+(,\d+)?$/.test(s)){s=s.replace(/\./g,'');miles=true}
+  s=s.replace(',','.');
+  return /^[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i.test(s)&&isFinite(+s)?{n:+s,miles}:{bad:1}}
+
+/* ---- Explora: sliders + gráfica V–I ---- */
+function pg(){const V=+$('#sv').value,R=+$('#sr').value,I=V/R,r4=Math.round(I*1e4)/1e4;
+  $('#pv').textContent=V+' V';$('#pr').textContent=R+' Ω';$('#pi').textContent=(r4!==I?'≈ ':'')+plain(r4)+' A';
+  $('#bi').style.width=Math.min(100,I/24*100)+'%';
+  $('#gl').setAttribute('x2',30+255/R);
+  $('#gp').setAttribute('cx',30+I*255/24);$('#gp').setAttribute('cy',170-V*160/24)}
+['#sv','#sr'].forEach(s=>$(s).oninput=pg);
+
+/* ---- Triángulo ---- */
+const T={V:[FRM.V,'Al tapar V, quedan I y R lado a lado: se multiplican.'],
+ I:[FRM.I,'Al tapar I, queda V encima de R: se divide.'],
+ R:[FRM.R,'Al tapar R, queda V encima de I: se divide.']};
+function tri(k){
+  $$('.z').forEach(z=>{const on=z.dataset.k===k;z.classList.toggle('on',on);
+    z.querySelector('text').textContent=on?'?':z.dataset.k;z.setAttribute('aria-pressed',on)});
+  $('#tf').innerHTML=col(T[k][0]);$('#td').textContent=T[k][1]}
+$$('.z').forEach(z=>{z.onclick=()=>tri(z.dataset.k);
+  z.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tri(z.dataset.k)}}});
+
+/* ---- Calculadora: validación, signos y razonamiento paso a paso ---- */
+function calc(){
+  const t=$('input[name=t]:checked').value,o=ids.filter(k=>k!==t),m=$('#msg'),out=$('#out'),res=$('#res'),errs=[],a={},mil=[];
+  const stop=(c,h)=>{m.className='msg '+c;m.innerHTML=h;out.innerHTML='';res.className='res'};
+  ids.forEach(k=>{const e=$('#'+k);e.readOnly=k===t;if(k===t)e.value='';e.classList.remove('bad');
+    e.placeholder=k===t?'Se calcula abajo':'Ej. '+{V:12,I:2,R:6}[k]});
+  if(!o.some(k=>$('#'+k).value.trim()))return stop('','Escribe los dos valores conocidos y el resultado aparecerá aquí.');
+  o.forEach(k=>{const e=$('#'+k),p=num(e.value);let x='';
+    if(p.e)x=`Falta ${A[k]} (${k}): no dejes el campo vacío.`;
+    else if(p.bad)x=`${N[k]} (${k}): escribe solo números (decimales con punto o coma).`;
+    else if(p.n===0)x=`${N[k]} (${k}) = 0: ${Z[t][k]} Ingresa un valor distinto de 0.`;
+    else if(k==='R'&&p.n<0)x='Resistencia (R): no puede ser negativa; un resistor siempre se opone al paso de la corriente.';
+    if(x){errs.push(x);e.classList.add('bad')}else{a[k]=p.n;if(p.miles)mil.push(k)}});
+  if(!errs.length&&t==='R'&&a.V*a.I<0){
+    errs.push('V e I tienen signos opuestos: con una resistencia pasiva, R = V ÷ I debe ser positiva. Revisa la polaridad o el sentido de la corriente.');
+    o.forEach(k=>$('#'+k).classList.add('bad'))}
+  if(errs.length)return stop('err',errs.map(x=>'⚠ '+x).join('<br>'));
+  const r=t==='V'?a.I*a.R:t==='I'?a.V/a.R:a.V/a.I;
+  if(!isFinite(r)||r===0)return stop('err','⚠ El resultado es demasiado grande o demasiado pequeño para mostrarse completo.');
+  a[t]=r;
+  const ap=sig(r)>=15,eq=si(r,U[t]),P=a.V*a.I,eqP=si(P,'W');
+  const sub={V:`${pu(a.I,'A')} × ${pu(a.R,'Ω')}`,I:`${pu(a.V,'V')} ÷ ${pu(a.R,'Ω')}`,R:`${pu(a.V,'V')} ÷ ${pu(a.I,'A')}`}[t];
+  const chk={V:[`I = V ÷ R = ${pu(r,'V')} ÷ ${pu(a.R,'Ω')} = ${plain(r/a.R)} A`,r/a.R,a.I],
+             I:[`V = I × R = ${pu(r,'A')} × ${pu(a.R,'Ω')} = ${plain(r*a.R)} V`,r*a.R,a.V],
+             R:[`V = I × R = ${pu(a.I,'A')} × ${pu(r,'Ω')} = ${plain(a.I*r)} V`,a.I*r,a.V]}[t];
+  const ok=Math.abs(chk[1]-chk[2])<=1e-9*Math.max(1,Math.abs(chk[2]));
+  const L=[`<b>Datos:</b> ${o.map(k=>`${k} = ${plain(a[k])} ${U[k]}`).join(' y ')}; buscamos <b>${t}</b> (${N[t].toLowerCase()}).`,
+    `<b>Despeje:</b> ${col(FRM[t])} <span class="s">(${WHY[t]})</span>`,
+    `<b>Sustitución:</b> ${t} = ${sub}`,
+    `<b>Resultado:</b> ${t} = ${ap?'≈ ':''}${plain(r)} ${U[t]}${eq?` (= ${eq})`:''}`,
+    `<b>Comprobación:</b> ${chk[0]} ${ok?'✔':'✘'}`];
+  if(t==='I'&&r<0)L.push('<b>Signo:</b> el voltaje es negativo, por eso la corriente sale negativa: circula en sentido contrario al de referencia (su magnitud no cambia).');
+  if(t==='V'&&r<0)L.push('<b>Signo:</b> la corriente es negativa, por eso el voltaje sale negativo: la polaridad es opuesta a la de referencia.');
+  if(t==='R'&&a.V<0)L.push('<b>Signo:</b> V e I son negativos a la vez; los signos se cancelan y R sale positiva, como debe ser.');
+  if(mil.length)L.push(`<b>Nota:</b> en ${mil.join(' y ')} el punto se leyó como separador de miles. Para decimales escribe coma.`);
+  L.push(`<b>Potencia:</b> P = V × I = ${pu(a.V,'V')} × ${pu(a.I,'A')} = ${plain(P)} W${eqP?` (= ${eqP})`:''}`);
+  m.className='msg ok';m.textContent='✔ Valores válidos: resultado calculado.';
+  res.className='res on';
+  res.innerHTML=`<div class="lb">${N[t]} (${t})</div><div class="val ${t.toLowerCase()}">${ap?'≈ ':''}${plain(r)} ${U[t]}</div>`
+    +(eq?`<div class="eq">= ${eq}</div>`:'')
+    +(ap?'<div class="eq">≈ El resultado tiene 15 o más cifras significativas; se muestran 15.</div>':'');
+  out.innerHTML='<ol class="stp">'+L.map(x=>`<li>${x}</li>`).join('')+'</ol>'}
+ids.forEach(k=>$('#'+k).addEventListener('input',calc));
+$$('input[name=t]').forEach(r=>r.onchange=calc);
+$('#clr').onclick=()=>{ids.forEach(k=>$('#'+k).value='');calc()};
+
+/* ---- Ejemplos → calculadora ---- */
+$$('[data-t]').forEach(b=>b.onclick=()=>{
+  $(`input[name=t][value=${b.dataset.t}]`).checked=true;
+  ids.forEach(k=>$('#'+k).value=b.dataset[k.toLowerCase()]||'');
+  calc();go('calc')});
+
+/* ---- Menú y puente con el sitio ---- */
+$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+if(SITIO_URL){const s=$('#sitio');s.href=SITIO_URL;s.textContent=SITIO_TEXTO;s.hidden=false}
+
+pg();tri('V');calc();
+
+
+/* ---- Simulador de circuito (estilo PhET) ---- */
+const LP=$('#sLoop'),LEN=LP.getTotalLength(),DOTS=[],NS='http://www.w3.org/2000/svg';
+for(let k=0;k<32;k++){const c=document.createElementNS(NS,'circle');c.setAttribute('r',4.5);c.setAttribute('class','el');$('#sDots').appendChild(c);DOTS.push(c)}
+let ON=true,CONV=false,SPD=0,PH=0,LT=0;
+const lg=(x,a,b)=>Math.min(1,Math.max(0,Math.log(x/a)/Math.log(b/a)));
+function runSim(){
+  const V=+$('#kV').value,R=+$('#kR').value,I=ON?V/R:0,P=V*I,g=Math.min(1,P/15),cur=I>=1?plain(I)+' A':plain(I*1000)+' mA';
+  $('#lV').textContent=plain(V)+' V';$('#lR').textContent=plain(R)+' Ω';
+  $('#mV').textContent=plain(V)+' V';$('#mI').textContent=cur;$('#mR').textContent=plain(R)+' Ω';$('#mP').textContent=plain(P)+' W';
+  $('#eV').style.fontSize=(22+42*lg(V,.5,24))+'px';
+  $('#eI').style.fontSize=(22+42*lg(Math.max(I,.001),.001,2.4))+'px';
+  $('#eR').style.fontSize=(22+42*lg(R,10,500))+'px';
+  $('#sGlow').style.opacity=g*.85;
+  $('#sRes').style.stroke=`rgb(255,${Math.round(114-60*g)},${Math.round(182-150*g)})`;
+  $('#sLever').style.transform=ON?'none':'rotate(-28deg)';
+  $('#sSw').textContent='Interruptor: '+(ON?'ENCENDIDO':'APAGADO');
+  $('#sDir').textContent='Sentido: '+(CONV?'corriente convencional (+ → −)':'electrones (− → +)');
+  $('#sCir').dataset.m=CONV?'c':'e';
+  SPD=I>0?.03+.4*lg(I,.001,2.4):0;
+  $('#sNote').innerHTML=ON?`<b>I = V ÷ R</b> = ${plain(V)} V ÷ ${plain(R)} Ω = <b class="i">${cur}</b>. La resistencia disipa <b>${plain(P)} W</b> en forma de calor (P = V × I).`
+    :'Interruptor abierto: el circuito está abierto y no circula corriente (I = 0 A), aunque la pila siga teniendo voltaje.'}
+['#kV','#kR'].forEach(s=>$(s).oninput=runSim);
+$('#sSw').onclick=()=>{ON=!ON;runSim()};$('#sLever').onclick=$('#sSw').onclick;
+$('#sDir').onclick=()=>{CONV=!CONV;runSim()};
+function frame(ts){const dt=Math.min(.05,(ts-LT)/1000||0);LT=ts;PH=(PH+(CONV?1:-1)*SPD*dt+1)%1;
+  DOTS.forEach((c,k)=>{const p=LP.getPointAtLength(((k/DOTS.length+PH)%1)*LEN);c.setAttribute('cx',p.x);c.setAttribute('cy',p.y)});
+  requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+
+/* ---- Aplicaciones de la vida real ---- */
+const APP=[
+ {e:'🔦',t:'Linterna',d:'Dos pilas (3 V) alimentan una bombilla pequeña de unos 10 Ω.',v:3,r:10},
+ {e:'💡',t:'LED con resistencia',d:'Con una pila de 9 V y un LED que se queda con unos 2 V, la resistencia debe soportar los 7 V restantes. Con 470 Ω la corriente queda en unos 15 mA, un valor seguro para un LED común. El LED no es óhmico: la ley se aplica a la resistencia.',v:7,r:470},
+ {e:'🚗',t:'Luz de un auto (12 V)',d:'Una lámpara pequeña de unos 30 Ω conectada a la batería del auto.',v:12,r:30},
+ {e:'🎚️',t:'Regulador de brillo o volumen',d:'Un potenciómetro cambia R: más resistencia, menos corriente y menos luz o sonido. Muévela en el simulador.',v:9,r:100},
+ {e:'🔥',t:'Estufa eléctrica',d:'Una resistencia calefactora de unos 35 Ω conectada a la red de 230 V (valor común en muchos países). Por seguridad, el simulador solo llega a 24 V.',v:230,r:35},
+ {e:'🔌',t:'Fusible de 10 A',d:'En 230 V, un fusible de 10 A protege cargas de 23 Ω o más. Si la resistencia baja de ahí, por ejemplo en un cortocircuito, la corriente supera los 10 A y el fusible se funde.',v:230,i:10}];
+const nice=(x,u,d=4)=>{if(!x)return '0 '+u;const a=Math.abs(x),T=[[1e9,'G'],[1e6,'M'],[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ'],[1e-9,'n']],p=T.find(q=>a>=q[0])||T[6],y=+(x/p[0]).toPrecision(d);
+  return (y===clean(x/p[0])?'':'≈ ')+plain(y)+' '+p[1]+u};
+$('#apps').innerHTML=APP.map((a,n)=>{const i=a.i??a.v/a.r,r=a.r??a.v/a.i,tg=a.r?'I':'R',x=tg==='I'?i:r,q=tg.toLowerCase();
+  return `<article class="c" style="--a:var(--${q})"><h3>${a.e} ${a.t}</h3><p class="s">${a.d}</p>`
+   +`<p><b>V = ${nice(a.v,'V')}</b> · <b>${a.r?'R = '+nice(a.r,'Ω'):'I = '+nice(a.i,'A')}</b><br>→ <b class="${q}">${tg} = ${nice(x,U[tg])}</b> · P = ${nice(a.v*i,'W')}</p>`
+   +`<button type="button" data-ap="${n}">Probar este caso</button></article>`}).join('');
+$$('[data-ap]').forEach(b=>b.onclick=()=>{const a=APP[b.dataset.ap],t=a.r?'I':'R',fit=a.v<=24&&a.r>=10&&a.r<=500;
+  $(`input[name=t][value=${t}]`).checked=true;
+  ids.forEach(k=>$('#'+k).value=k==='V'?a.v:k==='R'?(a.r||''):(a.i||''));
+  calc();
+  if(fit){$('#kV').value=a.v;$('#kR').value=a.r;ON=true;runSim();go('sim')}
+  else go('calc')});
+
+/* ---- Laboratorio virtual ---- */
+$$('input[name=lb]').forEach(r=>r.onchange=()=>{const k=$('input[name=lb]:checked').value;$('#lab-sp').hidden=k!=='sp';$('#lab-vi').hidden=k!=='vi'});
+const flow=(id,d,I)=>{const e=$('#'+id);e.setAttribute('d',d);e.style.animationDuration=(1.9-1.6*lg(Math.max(I,1e-9),5e-4,5)).toFixed(2)+'s'};
+function lab(){
+  const s=$('input[name=cf]:checked').value==='s',V=+$('#xV').value,A=+$('#xA').value,B=+$('#xB').value,n=(x,u)=>nice(x,u,6);
+  const Rt=s?A+B:A*B/(A+B),I=V/Rt,I1=s?I:V/A,I2=s?I:V/B,V1=s?I*A:V,V2=s?I*B:V;
+  $('#xVl').textContent=plain(V)+' V';$('#xAl').textContent=plain(A)+' Ω';$('#xBl').textContent=plain(B)+' Ω';
+  $('#xS').style.display=s?'':'none';$('#xP').style.display=s?'none':'';
+  if(s){flow('xF1','M60 86V40H340V80',I);flow('xF2','M340 140V180H60V136',I);flow('xF3','',0);flow('xF4','',0)}
+  else{flow('xF1','M60 86V40H200',I);flow('xF2','M200 180H60V136',I);flow('xF3','M200 40V180',I1);flow('xF4','M200 40H340V80M340 140V180H200',I2)}
+  $('#xRt').textContent=n(Rt,'Ω');$('#xI').textContent=n(I,'A');$('#xW').textContent=n(V*I,'W');
+  $('#xT1').textContent=n(V1,'V')+' · '+n(I1,'A');$('#xT2').textContent=n(V2,'V')+' · '+n(I2,'A');
+  const L=s?['En serie la corriente es la misma en todo el circuito.',
+    `<b>Rt</b> = R₁ + R₂ = ${n(A,'Ω')} + ${n(B,'Ω')} = <b>${n(Rt,'Ω')}</b>`,
+    `<b>I</b> = V ÷ Rt = ${n(V,'V')} ÷ ${n(Rt,'Ω')} = <b class="i">${n(I,'A')}</b>`,
+    `V₁ = I × R₁ = ${n(I,'A')} × ${n(A,'Ω')} = ${n(V1,'V')}; V₂ = I × R₂ = ${n(I,'A')} × ${n(B,'Ω')} = ${n(V2,'V')}`,
+    `Comprobación: V₁ + V₂ = ${n(V1+V2,'V')} = V ✔`]
+   :[`En paralelo cada rama recibe el mismo voltaje de la pila: ${n(V,'V')}.`,
+    `I₁ = V ÷ R₁ = ${n(V,'V')} ÷ ${n(A,'Ω')} = ${n(I1,'A')}; I₂ = V ÷ R₂ = ${n(V,'V')} ÷ ${n(B,'Ω')} = ${n(I2,'A')}`,
+    `<b>I</b> = I₁ + I₂ = <b class="i">${n(I1+I2,'A')}</b>`,
+    `<b>Rt</b> = V ÷ I = ${n(V,'V')} ÷ ${n(I,'A')} = <b>${n(Rt,'Ω')}</b> (siempre menor que la menor de las dos resistencias)`,
+    `Comprobación: R₁ × R₂ ÷ (R₁ + R₂) = ${n(A*B/(A+B),'Ω')} ✔`];
+  $('#xSt').innerHTML=L.map(x=>`<li>${x}</li>`).join('')}
+['#xV','#xA','#xB'].forEach(s=>$(s).oninput=lab);$$('input[name=cf]').forEach(r=>r.onchange=lab);
+
+const CMP={r:{vm:10,f:V=>V/100,t:'un resistor de 100 Ω'},b:{vm:8,f:V=>.3*Math.pow(V/6,.6),t:'una bombilla de filamento'},d:{vm:2,f:V=>1.5e-10*(Math.exp(V/.1)-1),t:'un diodo LED'}};
+function vi(){
+  const c=CMP[$('input[name=cp]:checked').value],vm=c.vm,Im=c.f(vm),V=vm*$('#yS').value/100,I=c.f(V),pts=[],n=(x,u)=>nice(x,u,5);
+  for(let k=0;k<=50;k++)pts.push((30+255*k/50).toFixed(1)+','+(170-160*c.f(vm*k/50)/Im).toFixed(1));
+  $('#yC').setAttribute('points',pts.join(' '));
+  $('#yP').setAttribute('cx',30+255*V/vm);$('#yP').setAttribute('cy',170-160*I/Im);
+  $('#yXm').textContent=plain(vm)+' V';$('#yYm').textContent=nice(Im,'A',3);
+  const r1=.25*vm/c.f(.25*vm),r2=vm/Im,ohm=Math.abs(r2/r1-1)<.01;
+  $('#yV').textContent=n(V,'V');$('#yI').textContent=n(I,'A');$('#yR').textContent=n(V/I,'Ω');
+  $('#yM').className='msg '+(ohm?'ok':'warn');
+  $('#yM').innerHTML=ohm?`✔ En ${c.t} la resistencia casi no cambia (≈ ${n(r2,'Ω')}) aunque cambie el voltaje: la gráfica es una recta que pasa por el origen. Es un componente <b>óhmico</b>.`
+    :`⚠ En ${c.t} la resistencia cambia de ${n(r1,'Ω')} (con el 25 % del voltaje) a ${n(r2,'Ω')} (con el voltaje máximo): la gráfica se curva. <b>No es óhmico</b>: V = I × R sigue valiendo en cada punto, pero R no es constante.`}
+$('#yS').oninput=vi;$$('input[name=cp]').forEach(r=>r.onchange=vi);
+
+/* ---- Abrir / cerrar todos los textos desplegables ---- */
+let ALL=false;$('#all').onclick=()=>{ALL=!ALL;$$('details.mx').forEach(d=>d.open=ALL);$('#all').textContent=ALL?'📕 Cerrar todo':'📖 Abrir todo'};
+
+runSim();lab();vi();
+
+/* ---- Vista por pestañas (ideal para el bloque de Google Sites) ---- */
+const PANELS=[...$$('.w>header.k,.w>section.k')];
+function go(id){const t=$('#'+id);if(!t)return;
+  if(document.body.classList.contains('tabs')){PANELS.forEach(p=>p.classList.toggle('on',p===t));
+    $$('.nav [data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===id));window.scrollTo(0,0)}
+  else t.scrollIntoView({behavior:'smooth'})}
+function view(tabs){document.body.classList.toggle('tabs',tabs);
+  $('#view').textContent=tabs?'📜 Ver todo seguido':'🗂️ Ver por pestañas';
+  if(tabs){const a=$('.nav [data-go].on');go(a?a.dataset.go:'inicio')}}
+$('#view').onclick=()=>view(!document.body.classList.contains('tabs'));
+view(window.self!==window.top);
+
+</script>
+</body>
+</html>
